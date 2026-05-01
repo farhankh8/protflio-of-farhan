@@ -45,7 +45,7 @@ export default function ContactSection() {
       icon: FaEnvelope,
       label: 'Email',
       value: 'khmohammadfarhan11@gmail.com',
-      href: 'mailto:khmohammadfarhan11@gmail.com',
+      href: 'https://mail.google.com/mail/?view=cm&fs=1&to=khmohammadfarhan11@gmail.com',
       color: '#EA4335',
     },
     {
