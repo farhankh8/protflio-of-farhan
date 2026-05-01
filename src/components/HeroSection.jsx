@@ -1,9 +1,15 @@
-import * as THREE from 'three'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, MeshDistortMaterial, Stars, Text3D, Center } from '@react-three/drei'
-import { motion } from 'framer-motion'
+import { Float, MeshDistortMaterial, Stars } from '@react-three/drei'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
+import * as THREE from 'three'
+
+const roles = [
+  { text: 'Full Stack Developer', color: '#8b5cf6' },
+  { text: 'AI Enthusiast', color: '#06b6d4' },
+  { text: 'Accounts & Finance Assistant', color: '#10b981' },
+]
 
 function FloatingShape({ position, color, speed = 1, type = 'sphere' }) {
   const meshRef = useRef()
@@ -39,8 +45,6 @@ function FloatingShape({ position, color, speed = 1, type = 'sphere' }) {
     </Float>
   )
 }
-
-import { useLayoutEffect } from 'react'
 
 function ParticleField() {
   const count = 2000
@@ -83,15 +87,21 @@ function ParticleField() {
   )
 }
 
-
 export default function HeroSection() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [roleIndex, setRoleIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length)
+    }, 3000)
+    return () => clearInterval(timer)
+  }, [])
 
   const handleMouseMove = (e) => {
-    setMousePos({
-      x: (e.clientX / window.innerWidth - 0.5) * 2,
-      y: (e.clientY / window.innerHeight - 0.5) * 2,
-    })
+    const x = (e.clientX / window.innerWidth - 0.5) * 2
+    const y = (e.clientY / window.innerHeight - 0.5) * 2
+    setMousePos({ x, y })
   }
 
   return (
@@ -107,7 +117,11 @@ export default function HeroSection() {
         overflow: 'hidden',
       }}
     >
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+      <div style={{ 
+        position: 'absolute', inset: 0, zIndex: 1,
+        transform: `translate(${mousePos.x * -20}px, ${mousePos.y * -20}px)`,
+        transition: 'transform 0.3s ease-out',
+      }}>
         <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
@@ -173,18 +187,39 @@ export default function HeroSection() {
           Farhan
         </motion.h1>
 
+        {/* Typewriter Role */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
           style={{
-            fontSize: 'clamp(18px, 3vw, 28px)',
-            color: 'rgba(255,255,255,0.7)',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             marginBottom: '30px',
-            fontWeight: 300,
           }}
         >
-          Full Stack Developer | AI Enthusiast | Cloud Explorer
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={roleIndex}
+              initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+              transition={{ duration: 0.5 }}
+              style={{
+                fontSize: 'clamp(18px, 3vw, 28px)',
+                color: roles[roleIndex].color,
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+              }}
+            >
+              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: roles[roleIndex].color, boxShadow: `0 0 20px ${roles[roleIndex].color}` }} />
+              {roles[roleIndex].text}
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
 
         <motion.p
@@ -202,6 +237,26 @@ export default function HeroSection() {
           Final-year BCA student at Yenepoya University crafting innovative solutions
           with AI, cloud computing, and modern web technologies.
         </motion.p>
+
+        {/* Open to Work Badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.9, duration: 0.5 }}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 16px',
+            background: 'rgba(16, 185, 129, 0.1)',
+            border: '1px solid rgba(16, 185, 129, 0.3)',
+            borderRadius: '999px',
+            marginBottom: '30px',
+          }}
+        >
+          <span className="pulse-dot" style={{ width: '8px', height: '8px', background: '#10b981', borderRadius: '50%', boxShadow: '0 0 10px #10b981', display: 'inline-block' }} />
+          <span style={{ color: '#10b981', fontSize: '13px', fontWeight: 600 }}>Open to work in UAE / GCC / India</span>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 50 }}

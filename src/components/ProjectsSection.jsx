@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa'
 
 const projects = [
@@ -23,6 +23,160 @@ const projects = [
     featured: true,
   },
 ]
+
+function ProjectCard({ project, index, isInView }) {
+  const cardRef = useRef(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    })
+  }
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+      style={{
+        position: 'relative',
+        padding: '30px',
+        background: 'rgba(139,92,246,0.03)',
+        border: '1px solid rgba(139,92,246,0.15)',
+        borderRadius: '24px',
+        overflow: 'hidden',
+        cursor: 'pointer',
+      }}
+    >
+      {/* Spotlight Effect */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(139, 92, 246, 0.15), transparent 40%)`,
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
+
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: `linear-gradient(90deg, ${project.color}, ${project.color}88)`,
+          }}
+        />
+
+        {project.featured && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              padding: '4px 12px',
+              background: `rgba(${parseInt(project.color.slice(1, 3), 16)}, ${parseInt(project.color.slice(3, 5), 16)}, ${parseInt(project.color.slice(5, 7), 16)}, 0.2)`,
+              border: `1px solid ${project.color}40`,
+              borderRadius: '20px',
+              fontSize: '11px',
+              fontWeight: 600,
+              color: project.color,
+            }}
+          >
+            FEATURED
+          </div>
+        )}
+
+        <h3 style={{
+          fontSize: '22px',
+          fontWeight: 700,
+          marginBottom: '12px',
+          color: '#ffffff',
+        }}>
+          {project.title}
+        </h3>
+
+        <p style={{
+          fontSize: '14px',
+          lineHeight: 1.7,
+          color: 'rgba(255,255,255,0.6)',
+          marginBottom: '20px',
+          minHeight: '70px',
+        }}>
+          {project.description}
+        </p>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
+          {project.tech.map((t) => (
+            <span
+              key={t}
+              style={{
+                padding: '6px 12px',
+                background: 'rgba(139,92,246,0.1)',
+                border: '1px solid rgba(139,92,246,0.2)',
+                borderRadius: '8px',
+                fontSize: '11px',
+                fontWeight: 500,
+                color: '#a855f7',
+              }}
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: '16px' }}>
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '14px',
+              fontWeight: 500,
+              transition: 'color 0.3s',
+            }}
+          >
+            <FaGithub size={18} />
+            GitHub
+          </a>
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '14px',
+              fontWeight: 500,
+              transition: 'color 0.3s',
+            }}
+          >
+            <FaExternalLinkAlt size={14} />
+            Live Demo
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
 
 export default function ProjectsSection() {
   const ref = useRef(null)
@@ -77,127 +231,7 @@ export default function ProjectsSection() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '30px' }}>
         {projects.map((project, index) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, y: 50 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
-            whileHover={{ y: -10 }}
-            style={{
-              position: 'relative',
-              padding: '30px',
-              background: 'rgba(139,92,246,0.03)',
-              border: '1px solid rgba(139,92,246,0.15)',
-              borderRadius: '24px',
-              overflow: 'hidden',
-              transition: 'all 0.4s ease',
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '4px',
-                background: `linear-gradient(90deg, ${project.color}, ${project.color}88)`,
-              }}
-            />
-
-            {project.featured && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  padding: '4px 12px',
-                  background: `rgba(${parseInt(project.color.slice(1, 3), 16)}, ${parseInt(project.color.slice(3, 5), 16)}, ${parseInt(project.color.slice(5, 7), 16)}, 0.2)`,
-                  border: `1px solid ${project.color}40`,
-                  borderRadius: '20px',
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  color: project.color,
-                }}
-              >
-                FEATURED
-              </div>
-            )}
-
-            <h3 style={{
-              fontSize: '22px',
-              fontWeight: 700,
-              marginBottom: '12px',
-              color: '#ffffff',
-            }}>
-              {project.title}
-            </h3>
-
-            <p style={{
-              fontSize: '14px',
-              lineHeight: 1.7,
-              color: 'rgba(255,255,255,0.6)',
-              marginBottom: '20px',
-              minHeight: '70px',
-            }}>
-              {project.description}
-            </p>
-
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '24px' }}>
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  style={{
-                    padding: '6px 12px',
-                    background: 'rgba(139,92,246,0.1)',
-                    border: '1px solid rgba(139,92,246,0.2)',
-                    borderRadius: '8px',
-                    fontSize: '11px',
-                    fontWeight: 500,
-                    color: '#a855f7',
-                  }}
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', gap: '16px' }}>
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  transition: 'color 0.3s',
-                }}
-              >
-                <FaGithub size={18} />
-                GitHub
-              </a>
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  transition: 'color 0.3s',
-                }}
-              >
-                <FaExternalLinkAlt size={14} />
-                Live Demo
-              </a>
-            </div>
-          </motion.div>
+          <ProjectCard key={project.title} project={project} index={index} isInView={isInView} />
         ))}
       </div>
 

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
+import TechMarquee from './components/TechMarquee'
 import AboutSection from './components/AboutSection'
 import SkillsSection from './components/SkillsSection'
 import ProjectsSection from './components/ProjectsSection'
@@ -25,6 +26,7 @@ function App() {
       <Navbar />
       <main>
         <HeroSection />
+        <TechMarquee />
         <AboutSection />
         <SkillsSection />
         <ProjectsSection />
