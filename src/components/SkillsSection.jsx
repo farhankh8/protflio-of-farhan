@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { FaPython, FaJs, FaHtml5, FaCss3Alt, FaNodeJs, FaReact, FaAws, FaDocker, FaGitAlt, FaLinux } from 'react-icons/fa'
-import { SiTypescript, SiMongodb, SiPostgresql, SiFirebase, SiTailwindcss, SiVercel, SiVite, SiNextdotjs, SiExpress, SiPostman, SiGooglecloud, SiMicrosoftazure } from 'react-icons/si'
+import { FaPython, FaJs, FaHtml5, FaCss3Alt, FaNodeJs, FaReact, FaAws, FaDocker, FaGitAlt, FaLinux, FaMicrosoft } from 'react-icons/fa'
+import { SiTypescript, SiMongodb, SiPostgresql, SiFirebase, SiTailwindcss, SiVercel, SiVite, SiNextdotjs, SiExpress, SiPostman, SiGooglecloud } from 'react-icons/si'
 
 const skills = {
   'Languages': [
@@ -27,7 +27,7 @@ const skills = {
   'Cloud & DevOps': [
     { name: 'AWS', icon: FaAws, color: '#FF9900' },
     { name: 'GCP', icon: SiGooglecloud, color: '#4285F4' },
-    { name: 'Azure', icon: SiMicrosoftazure, color: '#0078D4' },
+    { name: 'Azure', icon: FaMicrosoft, color: '#0078D4' },
     { name: 'Docker', icon: FaDocker, color: '#2496ED' },
     { name: 'Vercel', icon: SiVercel, color: '#000000' },
   ],

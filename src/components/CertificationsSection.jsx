@@ -2,8 +2,6 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { FaAws, FaGoogle, FaMicrosoft, FaAward } from 'react-icons/fa'
-import { SiIbm } from 'react-icons/si'
-
 const certifications = [
   {
     title: 'AWS Solutions Architecture',
@@ -17,7 +15,7 @@ const certifications = [
     title: 'IBM Generative AI Engineering',
     issuer: 'IBM',
     date: 'Dec 2025',
-    icon: SiIbm,
+    icon: FaAward,
     color: '#054ADA',
     description: 'Building and deploying generative AI models and applications using IBM Watson.',
   },
@@ -57,7 +55,7 @@ const certifications = [
     title: 'IBM Front-End Developer',
     issuer: 'IBM',
     date: 'Sep 2025',
-    icon: SiIbm,
+    icon: FaAward,
     color: '#054ADA',
     description: 'Modern front-end development with React, HTML, CSS, and JavaScript.',
   },
