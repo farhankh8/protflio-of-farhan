@@ -34,8 +34,8 @@ export default function ContactSection() {
     {
       icon: FaGithub,
       label: 'GitHub',
-      value: '@mhmdd-farhan',
-      href: 'https://github.com/mhmdd-farhan',
+      value: '@farhankh8',
+      href: 'https://github.com/farhankh8',
       color: '#ffffff',
     },
     {

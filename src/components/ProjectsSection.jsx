@@ -9,7 +9,7 @@ const projects = [
     description: 'A full-stack food ordering platform built with TypeScript, featuring real-time order management and responsive UI design.',
     tech: ['TypeScript', 'React', 'Node.js', 'MongoDB'],
     color: '#6366f1',
-    github: 'https://github.com/mhmdd-farhan/cheffest-web',
+    github: 'https://github.com/farhankh8/cheffest-web',
     live: '#',
     featured: true,
   },
@@ -18,7 +18,7 @@ const projects = [
     description: 'Robust backend API for the Cheffest platform with RESTful endpoints, authentication, and database management.',
     tech: ['TypeScript', 'Express', 'MongoDB', 'JWT'],
     color: '#8b5cf6',
-    github: 'https://github.com/mhmdd-farhan/cheffest-api',
+    github: 'https://github.com/farhankh8/cheffest-api',
     live: '#',
     featured: true,
   },
@@ -27,7 +27,7 @@ const projects = [
     description: 'AI-powered resume builder that creates professional resumes with customizable templates and smart content suggestions.',
     tech: ['Python', 'AI/ML', 'React', 'TailwindCSS'],
     color: '#a855f7',
-    github: 'https://github.com/mhmdd-farhan/resume-forge',
+    github: 'https://github.com/farhankh8/resume-forge',
     live: '#',
     featured: true,
   },
@@ -36,7 +36,7 @@ const projects = [
     description: 'Comprehensive travel management system with booking, itinerary planning, and customer management features.',
     tech: ['TypeScript', 'Express', 'PostgreSQL'],
     color: '#ec4899',
-    github: 'https://github.com/mhmdd-farhan/travel-agency-management-api',
+    github: 'https://github.com/farhankh8/travel-agency-management-api',
     live: '#',
     featured: false,
   },
@@ -45,7 +45,7 @@ const projects = [
     description: 'Digital invitation platform for Ramadan Iftar events with elegant designs and RSVP functionality.',
     tech: ['TypeScript', 'React', 'Vite'],
     color: '#14b8a6',
-    github: 'https://github.com/mhmdd-farhan/iftar_invitation',
+    github: 'https://github.com/farhankh8/iftar_invitation',
     live: '#',
     featured: false,
   },
@@ -54,7 +54,7 @@ const projects = [
     description: 'A platform tracking and showcasing the 100 Days of Coding Challenge progress with community features.',
     tech: ['JavaScript', 'HTML/CSS', 'Node.js'],
     color: '#f59e0b',
-    github: 'https://github.com/mhmdd-farhan/100DaysOfCodingChallenge',
+    github: 'https://github.com/farhankh8/100DaysOfCodingChallenge',
     live: '#',
     featured: false,
   },
@@ -244,7 +244,7 @@ export default function ProjectsSection() {
         style={{ textAlign: 'center', marginTop: '60px' }}
       >
         <a
-          href="https://github.com/mhmdd-farhan"
+          href="https://github.com/farhankh8"
           target="_blank"
           rel="noopener noreferrer"
           style={{

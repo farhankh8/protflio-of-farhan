@@ -256,7 +256,7 @@ export default function HeroSection() {
           }}
         >
           {[
-            { icon: FaGithub, href: 'https://github.com/mhmdd-farhan', label: 'GitHub' },
+            { icon: FaGithub, href: 'https://github.com/farhankh8', label: 'GitHub' },
             { icon: FaLinkedin, href: 'https://www.linkedin.com/in/khmohammadfarhan', label: 'LinkedIn' },
             { icon: FaEnvelope, href: 'mailto:khmohammadfarhan11@gmail.com', label: 'Email' },
           ].map(({ icon: Icon, href, label }) => (
