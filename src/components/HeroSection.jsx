@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, MeshDistortMaterial, Stars, Text3D, Center } from '@react-three/drei'
@@ -39,23 +40,34 @@ function FloatingShape({ position, color, speed = 1, type = 'sphere' }) {
   )
 }
 
+import { useLayoutEffect } from 'react'
+
 function ParticleField() {
   const count = 2000
   const mesh = useRef()
 
-  const dummy = (() => {
-    const o = new THREE.Object3D()
-    return (i) => {
-      o.position.set(
+  const particles = useRef(
+    Array.from({ length: count }, () => ({
+      position: [
         (Math.random() - 0.5) * 50,
         (Math.random() - 0.5) * 50,
-        (Math.random() - 0.5) * 50
-      )
-      o.scale.setScalar(Math.random() * 0.1 + 0.05)
-      o.updateMatrix()
-      return o.matrix.clone()
-    }
-  })()
+        (Math.random() - 0.5) * 50,
+      ],
+      scale: Math.random() * 0.1 + 0.05,
+    }))
+  )
+
+  useLayoutEffect(() => {
+    if (!mesh.current) return
+    const temp = new THREE.Object3D()
+    particles.current.forEach((p, i) => {
+      temp.position.set(...p.position)
+      temp.scale.setScalar(p.scale)
+      temp.updateMatrix()
+      mesh.current.setMatrixAt(i, temp.matrix)
+    })
+    mesh.current.instanceMatrix.needsUpdate = true
+  }, [])
 
   useFrame((state) => {
     if (mesh.current) {
@@ -67,12 +79,10 @@ function ParticleField() {
     <instancedMesh ref={mesh} args={[null, null, count]}>
       <sphereGeometry args={[0.05, 8, 8]} />
       <meshBasicMaterial color="#8b5cf6" />
-      {Array.from({ length: count }, (_, i) => dummy(i))}
     </instancedMesh>
   )
 }
 
-import * as THREE from 'three'
 
 export default function HeroSection() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
