@@ -1,20 +1,44 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaSpinner, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
+import emailjs from '@emailjs/browser'
 
 export default function ContactSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState('idle') // idle, sending, success, error
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
-    setFormData({ name: '', email: '', message: '' })
+    setStatus('sending')
+
+    const serviceId = 'service_jyxeq9h'
+    const templateId = 'template_kgzc7o5'
+    const publicKey = 'F18OtQtpQpinAJBLX'
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+    }
+
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text)
+        setStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => setStatus('idle'), 5000)
+      })
+      .catch((error) => {
+        console.error('FAILED...', error)
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 5000)
+      })
   }
+
+  const isDisabled = status === 'sending' || status === 'success'
 
   const contactLinks = [
     {
@@ -244,27 +268,53 @@ export default function ContactSection() {
 
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              disabled={isDisabled}
+              whileHover={!isDisabled ? { scale: 1.02 } : {}}
+              whileTap={!isDisabled ? { scale: 0.98 } : {}}
               style={{
                 width: '100%',
                 padding: '18px',
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                background: status === 'error' 
+                  ? 'linear-gradient(135deg, #ef4444, #b91c1c)' 
+                  : status === 'success' 
+                    ? 'linear-gradient(135deg, #10b981, #059669)'
+                    : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
                 border: 'none',
                 borderRadius: '12px',
                 color: '#ffffff',
                 fontSize: '16px',
                 fontWeight: 600,
-                cursor: 'pointer',
+                cursor: isDisabled ? 'not-allowed' : 'pointer',
+                opacity: isDisabled ? 0.8 : 1,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '10px',
-                boxShadow: '0 10px 40px rgba(99,102,241,0.4)',
+                boxShadow: status === 'error' 
+                  ? '0 10px 40px rgba(239,68,68,0.4)' 
+                  : status === 'success' 
+                    ? '0 10px 40px rgba(16,185,129,0.4)'
+                    : '0 10px 40px rgba(99,102,241,0.4)',
+                transition: 'all 0.3s',
               }}
             >
-              {submitted ? (
-                <>Message Sent! ✓</>
+              {status === 'sending' ? (
+                <>
+                  <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
+                    <FaSpinner size={16} />
+                  </motion.div>
+                  Sending...
+                </>
+              ) : status === 'success' ? (
+                <>
+                  <FaCheckCircle />
+                  Message Sent Successfully!
+                </>
+              ) : status === 'error' ? (
+                <>
+                  <FaExclamationCircle />
+                  Failed, Try Again
+                </>
               ) : (
                 <>
                   <FaPaperPlane />
