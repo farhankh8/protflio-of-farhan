@@ -42,6 +42,33 @@ a {
   color: inherit;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #a855f7;
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 100001;
+  font-size: 14px;
+  font-weight: 600;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 #root {
   min-height: 100vh;
 }
@@ -158,4 +185,21 @@ a, button, [role="button"], input, textarea, .clickable {
   .side-nav-dots {
     display: none !important;
   }
+}
+
+section {
+  scroll-margin-top: 80px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::before, ::after {
+  box-sizing: border-box;
 }
