@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
+import AnimatedCounter from './AnimatedCounter'
 
 export default function AboutSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const statsRef = useRef(null)
+  const statsInView = useInView(statsRef, { once: true, margin: '-50px' })
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -135,6 +138,55 @@ export default function AboutSection() {
                 <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px' }}>{label}</span>
                 <span style={{ color: '#ffffff', fontWeight: 600, fontSize: '14px' }}>{value}</span>
               </div>
+            ))}
+          </motion.div>
+        </div>
+
+        <div ref={statsRef} style={{ marginTop: '80px' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={statsInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '30px',
+              padding: '40px',
+              background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.04))',
+              border: '1px solid rgba(139,92,246,0.2)',
+              borderRadius: '24px',
+              backdropFilter: 'blur(10px)',
+            }}
+          >
+            {[
+              { end: 10, suffix: '+', label: 'Projects' },
+              { end: 10, suffix: '+', label: 'Certifications' },
+              { end: 2, suffix: '+', label: 'Internships' },
+            ].map(({ end, suffix, label }, index) => (
+              <motion.div
+                key={label}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={statsInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                style={{ textAlign: 'center' }}
+              >
+                <div
+                  style={{
+                    fontSize: 'clamp(36px, 5vw, 56px)',
+                    fontWeight: 900,
+                    background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    lineHeight: 1,
+                    marginBottom: '8px',
+                  }}
+                >
+                  <AnimatedCounter end={end} suffix={suffix} />
+                </div>
+                <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>
+                  {label}
+                </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>

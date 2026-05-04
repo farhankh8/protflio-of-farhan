@@ -89,6 +89,24 @@ export default function CertificationsSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
+  const handleTilt = (e, card) => {
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = (y - centerY) / 10
+    const rotateY = (centerX - x) / 10
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
+    card.style.transition = 'transform 0.1s ease-out'
+  }
+
+  const handleTiltReset = (card) => {
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
+    card.style.transition = 'transform 0.5s ease-out'
+  }
+
   return (
     <section
       id="certifications"
@@ -157,7 +175,8 @@ export default function CertificationsSection() {
             initial={{ opacity: 0, y: 40, rotateX: 15 }}
             animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
             transition={{ duration: 0.8, delay: index * 0.1 }}
-            whileHover={{ y: -8, scale: 1.02 }}
+            onMouseMove={(e) => handleTilt(e, e.currentTarget)}
+            onMouseLeave={(e) => handleTiltReset(e.currentTarget)}
             style={{
               padding: '28px',
               background: 'rgba(139,92,246,0.03)',
@@ -166,6 +185,8 @@ export default function CertificationsSection() {
               position: 'relative',
               overflow: 'hidden',
               cursor: 'pointer',
+              transformStyle: 'preserve-3d',
+              willChange: 'transform',
             }}
           >
             <div

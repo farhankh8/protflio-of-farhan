@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
 import TechMarquee from './components/TechMarquee'
@@ -8,6 +8,10 @@ import ProjectsSection from './components/ProjectsSection'
 import CertificationsSection from './components/CertificationsSection'
 import ContactSection from './components/ContactSection'
 import LoadingScreen from './components/LoadingScreen'
+import CustomCursor from './components/CustomCursor'
+import ScrollProgress from './components/ScrollProgress'
+import BackToTop from './components/BackToTop'
+import ScrollParticles from './components/ScrollParticles'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -23,6 +27,9 @@ function App() {
 
   return (
     <div style={{ background: '#050510', minHeight: '100vh' }}>
+      <CustomCursor />
+      <ScrollProgress />
+      <ScrollParticles />
       <Navbar />
       <main>
         <HeroSection />
@@ -33,6 +40,7 @@ function App() {
         <CertificationsSection />
         <ContactSection />
       </main>
+      <BackToTop />
     </div>
   )
 }

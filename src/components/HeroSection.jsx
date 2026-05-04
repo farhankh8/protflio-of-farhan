@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, MeshDistortMaterial, Stars } from '@react-three/drei'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from 'react-icons/fa'
 import * as THREE from 'three'
 
 const roles = [
@@ -102,6 +102,15 @@ export default function HeroSection() {
     const x = (e.clientX / window.innerWidth - 0.5) * 2
     const y = (e.clientY / window.innerHeight - 0.5) * 2
     setMousePos({ x, y })
+  }
+
+  const handleDownloadResume = () => {
+    const link = document.createElement('a')
+    link.href = '/KH_Mohammad_Farhan_Resume.pdf'
+    link.download = 'KH_Mohammad_Farhan_Resume.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   return (
@@ -297,6 +306,28 @@ export default function HeroSection() {
           >
             Get In Touch
           </motion.a>
+
+          <motion.button
+            onClick={handleDownloadResume}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="clickable"
+            style={{
+              padding: '16px 32px',
+              background: 'rgba(16, 185, 129, 0.1)',
+              border: '2px solid #10b981',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: 600,
+              color: '#10b981',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <FaDownload size={16} />
+            Download Resume
+          </motion.button>
         </motion.div>
 
         <motion.div

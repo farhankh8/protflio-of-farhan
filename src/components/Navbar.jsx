@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { FaDownload } from 'react-icons/fa'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -31,6 +32,15 @@ export default function Navbar() {
     { name: 'Certifications', href: '#certifications' },
     { name: 'Contact', href: '#contact' },
   ]
+
+  const handleDownloadResume = () => {
+    const link = document.createElement('a')
+    link.href = '/KH_Mohammad_Farhan_Resume.pdf'
+    link.download = 'KH_Mohammad_Farhan_Resume.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
 
   return (
     <motion.nav
@@ -103,6 +113,30 @@ export default function Navbar() {
           )
         })}
       </div>
+
+      <motion.button
+        onClick={handleDownloadResume}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="clickable"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '10px 20px',
+          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+          borderRadius: '10px',
+          fontSize: '13px',
+          fontWeight: 600,
+          color: '#fff',
+          border: 'none',
+          boxShadow: '0 4px 20px rgba(99, 102, 241, 0.3)',
+          marginRight: '16px',
+        }}
+      >
+        <FaDownload size={12} />
+        Resume
+      </motion.button>
 
       <motion.button
         onClick={() => setMenuOpen(!menuOpen)}
