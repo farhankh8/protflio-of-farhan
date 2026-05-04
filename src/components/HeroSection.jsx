@@ -106,17 +106,8 @@ export default function HeroSection() {
 
   const handleDownloadResume = () => {
     const link = document.createElement('a')
-    link.href = '/KH_Mohammad_Farhan_Resume.pdf'
-    link.download = 'KH_Mohammad_Farhan_Resume.pdf'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
-  const handleDownloadCV = () => {
-    const link = document.createElement('a')
-    link.href = '/KH_Mohammad_Farhan_CV.pdf'
-    link.download = 'KH_Mohammad_Farhan_CV.pdf'
+    link.href = '/mohammadfarhan_resume.pdf'
+    link.download = 'mohammadfarhan_resume.pdf'
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -344,29 +335,6 @@ export default function HeroSection() {
           >
             <FaDownload size={14} />
             Download Resume
-          </motion.button>
-
-          <motion.button
-            onClick={handleDownloadCV}
-            whileHover={{ scale: 1.05, boxShadow: '0 8px 30px rgba(99, 102, 241, 0.3)' }}
-            whileTap={{ scale: 0.95 }}
-            className="clickable"
-            style={{
-              padding: '14px 28px',
-              background: 'rgba(99, 102, 241, 0.1)',
-              border: '2px solid #6366f1',
-              borderRadius: '12px',
-              fontSize: '15px',
-              fontWeight: 600,
-              color: '#6366f1',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              transition: 'box-shadow 0.3s',
-            }}
-          >
-            <FaDownload size={14} />
-            Download CV
           </motion.button>
         </motion.div>
 

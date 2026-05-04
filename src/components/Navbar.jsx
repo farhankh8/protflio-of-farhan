@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaDownload, FaFileAlt, FaIdCard } from 'react-icons/fa'
+import { FaDownload, FaFileAlt } from 'react-icons/fa'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -47,18 +47,8 @@ export default function Navbar() {
 
   const handleDownloadResume = () => {
     const link = document.createElement('a')
-    link.href = '/KH_Mohammad_Farhan_Resume.pdf'
-    link.download = 'KH_Mohammad_Farhan_Resume.pdf'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    setDropdownOpen(false)
-  }
-
-  const handleDownloadCV = () => {
-    const link = document.createElement('a')
-    link.href = '/KH_Mohammad_Farhan_CV.pdf'
-    link.download = 'KH_Mohammad_Farhan_CV.pdf'
+    link.href = '/mohammadfarhan_resume.pdf'
+    link.download = 'mohammadfarhan_resume.pdf'
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -184,56 +174,31 @@ export default function Navbar() {
                 zIndex: 1001,
               }}
             >
-              <motion.button
-                onClick={handleDownloadResume}
-                whileHover={{ x: 4, background: 'rgba(16, 185, 129, 0.1)' }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  width: '100%',
-                  padding: '12px 16px',
-                  background: 'transparent',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: '#fff',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                }}
-              >
-                <FaFileAlt size={16} color="#10b981" />
-                <div>
-                  <div style={{ fontWeight: 600 }}>Resume</div>
-                  <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>Short version (1 page)</div>
-                </div>
-              </motion.button>
-              <motion.button
-                onClick={handleDownloadCV}
-                whileHover={{ x: 4, background: 'rgba(99, 102, 241, 0.1)' }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  width: '100%',
-                  padding: '12px 16px',
-                  background: 'transparent',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: '#fff',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                }}
-              >
-                <FaIdCard size={16} color="#6366f1" />
-                <div>
-                  <div style={{ fontWeight: 600 }}>CV</div>
-                  <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>Detailed version</div>
-                </div>
-              </motion.button>
+             <motion.button
+                 onClick={handleDownloadResume}
+                 whileHover={{ x: 4, background: 'rgba(16, 185, 129, 0.1)' }}
+                 style={{
+                   display: 'flex',
+                   alignItems: 'center',
+                   gap: '12px',
+                   width: '100%',
+                   padding: '12px 16px',
+                   background: 'transparent',
+                   border: 'none',
+                   borderRadius: '8px',
+                   color: '#fff',
+                   fontSize: '14px',
+                   fontWeight: 500,
+                   cursor: 'pointer',
+                   textAlign: 'left',
+                 }}
+               >
+                 <FaFileAlt size={16} color="#10b981" />
+                 <div>
+                   <div style={{ fontWeight: 600 }}>Resume</div>
+                   <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>Download my resume</div>
+                 </div>
+               </motion.button>
             </motion.div>
           )}
         </AnimatePresence>
