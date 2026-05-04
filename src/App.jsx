@@ -12,12 +12,13 @@ import CustomCursor from './components/CustomCursor'
 import ScrollProgress from './components/ScrollProgress'
 import BackToTop from './components/BackToTop'
 import ScrollParticles from './components/ScrollParticles'
+import SideNavDots from './components/SideNavDots'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3000)
+    const timer = setTimeout(() => setIsLoading(false), 3800)
     return () => clearTimeout(timer)
   }, [])
 
@@ -41,6 +42,7 @@ function App() {
         <ContactSection />
       </main>
       <BackToTop />
+      <SideNavDots />
     </div>
   )
 }

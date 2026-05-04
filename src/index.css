@@ -153,3 +153,9 @@ a, button, [role="button"], input, textarea, .clickable {
     cursor: pointer;
   }
 }
+
+@media (max-width: 1024px) {
+  .side-nav-dots {
+    display: none !important;
+  }
+}
