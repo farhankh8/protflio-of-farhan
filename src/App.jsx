@@ -16,7 +16,6 @@ import ScrollParticles from './components/ScrollParticles'
 import SideNavDots from './components/SideNavDots'
 import KeyboardShortcuts from './components/KeyboardShortcuts'
 
-const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'))
 const TimelineSection = lazy(() => import('./components/TimelineSection'))
 const Footer = lazy(() => import('./components/Footer'))
 
@@ -77,9 +76,6 @@ function App() {
           <TimelineSection />
         </Suspense>
         <CertificationsSection />
-        <Suspense fallback={<SectionLoader />}>
-          <TestimonialsSection />
-        </Suspense>
         <ContactSection />
       </main>
       <Suspense fallback={null}>
