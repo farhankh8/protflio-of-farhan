@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { FaDownload } from 'react-icons/fa'
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FaDownload, FaFileAlt, FaIdCard } from 'react-icons/fa'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
@@ -40,6 +52,17 @@ export default function Navbar() {
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+    setDropdownOpen(false)
+  }
+
+  const handleDownloadCV = () => {
+    const link = document.createElement('a')
+    link.href = '/KH_Mohammad_Farhan_CV.pdf'
+    link.download = 'KH_Mohammad_Farhan_CV.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    setDropdownOpen(false)
   }
 
   return (
@@ -114,29 +137,107 @@ export default function Navbar() {
         })}
       </div>
 
-      <motion.button
-        onClick={handleDownloadResume}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="clickable"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '10px 20px',
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-          borderRadius: '10px',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: '#fff',
-          border: 'none',
-          boxShadow: '0 4px 20px rgba(99, 102, 241, 0.3)',
-          marginRight: '16px',
-        }}
-      >
-        <FaDownload size={12} />
-        Resume
-      </motion.button>
+      {/* Download Dropdown */}
+      <div ref={dropdownRef} style={{ position: 'relative', marginRight: '16px' }}>
+        <motion.button
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="clickable"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '10px 20px',
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            borderRadius: '10px',
+            fontSize: '13px',
+            fontWeight: 600,
+            color: '#fff',
+            border: 'none',
+            boxShadow: '0 4px 20px rgba(99, 102, 241, 0.3)',
+          }}
+        >
+          <FaDownload size={12} />
+          Download
+          <span style={{ fontSize: '10px', marginLeft: '2px', opacity: 0.7 }}>▾</span>
+        </motion.button>
+
+        <AnimatePresence>
+          {dropdownOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              style={{
+                position: 'absolute',
+                top: 'calc(100% + 8px)',
+                right: 0,
+                background: 'rgba(10, 10, 26, 0.95)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(139, 92, 246, 0.3)',
+                borderRadius: '12px',
+                padding: '8px',
+                minWidth: '200px',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.4)',
+                zIndex: 1001,
+              }}
+            >
+              <motion.button
+                onClick={handleDownloadResume}
+                whileHover={{ x: 4, background: 'rgba(16, 185, 129, 0.1)' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'transparent',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: '#fff',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                <FaFileAlt size={16} color="#10b981" />
+                <div>
+                  <div style={{ fontWeight: 600 }}>Resume</div>
+                  <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>Short version (1 page)</div>
+                </div>
+              </motion.button>
+              <motion.button
+                onClick={handleDownloadCV}
+                whileHover={{ x: 4, background: 'rgba(99, 102, 241, 0.1)' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'transparent',
+                  border: 'none',
+                  borderRadius: '8px',
+                  color: '#fff',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                <FaIdCard size={16} color="#6366f1" />
+                <div>
+                  <div style={{ fontWeight: 600 }}>CV</div>
+                  <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>Detailed version</div>
+                </div>
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       <motion.button
         onClick={() => setMenuOpen(!menuOpen)}

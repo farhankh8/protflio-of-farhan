@@ -113,6 +113,15 @@ export default function HeroSection() {
     document.body.removeChild(link)
   }
 
+  const handleDownloadCV = () => {
+    const link = document.createElement('a')
+    link.href = '/KH_Mohammad_Farhan_CV.pdf'
+    link.download = 'KH_Mohammad_Farhan_CV.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
     <section
       id="home"
@@ -271,7 +280,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1 }}
-          style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}
+          style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '24px' }}
         >
           <motion.a
             href="#projects"
@@ -306,27 +315,58 @@ export default function HeroSection() {
           >
             Get In Touch
           </motion.a>
+        </motion.div>
 
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}
+        >
           <motion.button
             onClick={handleDownloadResume}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 30px rgba(16, 185, 129, 0.3)' }}
             whileTap={{ scale: 0.95 }}
             className="clickable"
             style={{
-              padding: '16px 32px',
+              padding: '14px 28px',
               background: 'rgba(16, 185, 129, 0.1)',
               border: '2px solid #10b981',
               borderRadius: '12px',
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: 600,
               color: '#10b981',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
+              transition: 'box-shadow 0.3s',
             }}
           >
-            <FaDownload size={16} />
+            <FaDownload size={14} />
             Download Resume
+          </motion.button>
+
+          <motion.button
+            onClick={handleDownloadCV}
+            whileHover={{ scale: 1.05, boxShadow: '0 8px 30px rgba(99, 102, 241, 0.3)' }}
+            whileTap={{ scale: 0.95 }}
+            className="clickable"
+            style={{
+              padding: '14px 28px',
+              background: 'rgba(99, 102, 241, 0.1)',
+              border: '2px solid #6366f1',
+              borderRadius: '12px',
+              fontSize: '15px',
+              fontWeight: 600,
+              color: '#6366f1',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              transition: 'box-shadow 0.3s',
+            }}
+          >
+            <FaDownload size={14} />
+            Download CV
           </motion.button>
         </motion.div>
 

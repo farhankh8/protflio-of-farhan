@@ -19,6 +19,7 @@ const quickLinks = {
   ],
   Resources: [
     { label: 'Download Resume', href: '/KH_Mohammad_Farhan_Resume.pdf', download: true },
+    { label: 'Download CV', href: '/KH_Mohammad_Farhan_CV.pdf', download: true },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/khmohammadfarhan' },
     { label: 'Contact Me', href: '#contact' },
   ],
